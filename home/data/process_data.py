@@ -4,13 +4,18 @@ ETL Pipeline Preparation
 Creates  ETL pipeline from disaster_messages.csv , disaster_categories.csv
 and stores data in database DisasterResponse.db
 
+cd home\data
 execute on command line:
 python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
+# coding utf-8
+
 '''
 
-
+# imported libraries
 import sys
+import os
 import pandas as pd
+import numpy as np
 from sqlalchemy import create_engine
 '''
 
@@ -26,13 +31,16 @@ def load_data(messages_filepath, categories_filepath):
     
     '''  
 
-    print("Item messages_filepath is a file: " + str(path.isfile(messages_filepath)))
-    print("Item categories_filepath is a file: " + str(path.isfile(categories_filepath)))
+    # print(type(messages_filepath))
+    # cwd = os.getcwd()
 
-
+    # load messages dataset 
     messages = pd.read_csv(messages_filepath,dtype=str,index_col=False) 
+    messages.head()
 
+    # load categories dataset
     categories = pd.read_csv(categories_filepath,dtype=str,index_col=False)
+    categories.head()
     
 
     # merge datasets
@@ -49,7 +57,7 @@ def load_data(messages_filepath, categories_filepath):
 def clean_data(df):
     '''
     input is dataframe df
-
+    output is cleaned df
 
     '''
 
@@ -129,7 +137,7 @@ def clean_data(df):
 
 
 
-def save_data(df, database_filename = database_filepath):
+def save_data(df, database_filename):
     '''
     Save the clean dataset df into an sqlite database wirh database_filename.
     You can do this with pandas 
@@ -142,7 +150,7 @@ def save_data(df, database_filename = database_filepath):
     pass  
     '''
     # InsertDatabaseName.db
-    engine = create_engine('sqlite:///' + database_filename)
+    engine = create_engine('sqlite:///'+database_filename)
     df.to_sql('InsertTableName', engine,if_exists='replace', index=False)
     return
      
@@ -152,7 +160,7 @@ def save_data(df, database_filename = database_filepath):
 
 def main():
     # if len(sys.argv) == 4: # former with parameters
-  
+    
     
     if len(sys.argv) == 4: # my for testing
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
@@ -175,12 +183,20 @@ def main():
         print ("Argument List:", str(sys.argv)) # my added
         '''
 
+        '''
+        # if i need absolute path
+        cwd = os.getcwd()
+        messages_filepath = f'{cwd}/home/data/'+ messages_filepath
+        categories_filepath = f'{cwd}/home/data/'+ categories_filepath
+        database_filepath = f'{cwd}/home/data/'+ database_filepath
+        '''
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
         df = load_data(messages_filepath, categories_filepath)
 
         print('Cleaning data...')
         df = clean_data(df)
+        
         
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
         save_data(df, database_filepath)
@@ -194,6 +210,9 @@ def main():
               'to as the third argument. \n\nExample: python process_data.py '\
               'disaster_messages.csv disaster_categories.csv '\
               'DisasterResponse.db')
+        
+        print('wrong end with sys.argv[1:] = {}'.format(sys.argv[1:]))
+        print('\n wrong end')
 
 
 if __name__ == '__main__':

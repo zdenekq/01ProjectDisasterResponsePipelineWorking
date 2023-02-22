@@ -1,6 +1,8 @@
 import sys
 
-
+# prikazova radka # 
+# cd home\models
+# python train_classifier.py ../data/DisasterResponse.db classifier.pkl
 def load_data(database_filepath):
     pass
 
@@ -25,6 +27,7 @@ def main():
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
+        # vypisuje database_filepath = ../data/DisasterResponse.db
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
         
