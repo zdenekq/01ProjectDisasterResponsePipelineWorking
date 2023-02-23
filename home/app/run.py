@@ -1,5 +1,6 @@
 import json
 import plotly
+#import plotly.express as px
 import pandas as pd
 
 from nltk.stem import WordNetLemmatizer
@@ -26,11 +27,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///../data/DisasterResponse.db')
+df = pd.read_sql_table('InsertTableName', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -42,6 +43,14 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    
+    fire_counts = df.groupby('fire').count()['message']
+    fire_names = list(genre_counts.index)
+
+
+    floods_counts = df.groupby('floods').count()['message']
+    floods_names = list(floods_counts.index)
+    
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -63,9 +72,46 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+		
+		{
+            'data': [
+                Bar(
+                    x=fire_names,
+                    y=fire_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Fire',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Fire"
+                }
+            }
+        },
+		{
+            'data': [
+                Bar(
+                    x=floods_names,
+                    y=floods_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Floods',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Floods"
+                }
+            }
         }
+		
     ]
-    
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
@@ -94,7 +140,7 @@ def go():
 
 def main():
     app.run(host='0.0.0.0', port=3000, debug=True)
-
+    # app.run(host='0.0.0.0', port=3000, debug=True)
 
 if __name__ == '__main__':
     main()
