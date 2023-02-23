@@ -179,10 +179,10 @@ def build_model():
     
     
     # Hyperparameters grid
-    parameters = {  
-              'tfidf__use_idf': (True, False),
-              'clf__estimator__n_estimators': [5, 10, 20], 
-              'clf__estimator__min_samples_split': [2,3, 4]} 
+    parameters = {'tfidf__use_idf': [True, False],
+                    'clf__estimator__n_estimators': [5]} 
+
+
 
 
     # initialize 
@@ -215,7 +215,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     '''
 
     
-    Y_pred = cv.predict(X_test)
+    Y_pred = model.predict(X_test)
     
     Y_pred_df = pd.DataFrame(Y_pred, columns = category_names)
     Y_test_df = pd.DataFrame(Y_test, columns = category_names)
