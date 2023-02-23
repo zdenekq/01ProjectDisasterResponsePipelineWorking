@@ -5,13 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: process_data.py File",
+            "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "process_data.py",
-            "args": ["disaster_messages.csv","disaster_categories.csv","DisasterResponse.db"],
+            "program": "${file}",
             "console": "integratedTerminal",
-            "justMyCode": true
-        }
+            "justMyCode": true,
+            "args": [
+                "${workspaceFolder}/home/data/DisasterResponse.db",
+                "${workspaceFolder}/home/models/classifier.pkl"
+            ]
+        },
+      
     ]
 }

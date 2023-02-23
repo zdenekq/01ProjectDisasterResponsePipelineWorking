@@ -228,8 +228,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
             classification_report(Y_test_df.iloc[:,i], Y_pred_df.iloc[:,i])))
 
 
-    
-    print(classification_report(Y_test_df.iloc[:, 1:].values, np.array([x[1:] for x in Y_pred]), target_names = category_names))
+    # ValueError: Number of classes, 35, does not match size of target_names, 36. Try specifying the labels parameter
+    # print(classification_report(Y_test_df.iloc[:, 1:].values, np.array([x[1:] for x in Y_pred]), target_names = category_names))
     # fit
     # model.fit(X_train, Y_train)
     # model.best_params_  
