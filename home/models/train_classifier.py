@@ -48,6 +48,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer, HashingVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
 
 
 def load_data(database_filepath):
