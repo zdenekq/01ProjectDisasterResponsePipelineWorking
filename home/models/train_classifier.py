@@ -241,10 +241,17 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    Function for saving the model as a Pickle
+
+    Input:
+    model: model for saving
+    model_filepath: path to Pickle -file
+    '''
     with open(model_filepath, 'wb') as file:
         pickle.dump(model, file)
 
-
+    return 
 
 
 
