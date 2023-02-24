@@ -129,6 +129,7 @@ def clean_data(df):
 
     # check number of duplicates
     # df.shape[0]- df['id'].nunique()
+    assert len(df[df.duplicated(subset=['id'])]) == 0
     
 
     return df
