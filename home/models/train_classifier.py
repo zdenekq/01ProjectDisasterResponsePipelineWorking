@@ -130,9 +130,10 @@ def tokenize(text):
             # clean_tok = lemmatizer.lemmatize(tok).lower().strip()
             noun_lemmatize_tok = lemmatizer.lemmatize(tok)
             verb_lemmatize_tok = lemmatizer.lemmatize(noun_lemmatize_tok,pos="v")
-            stem_lem_token = stemmer.stem(verb_lemmatize_tok)
-
-            new_tok = stem_lem_token.lower().strip() 
+            # according to Udacity review should be applied lemmatization without stemmer
+            # stem_lem_token = stemmer.stem(verb_lemmatize_tok)
+            #new_tok = stem_lem_token.lower().strip()
+            new_tok = verb_lemmatize_tok.lower().strip() 
             clean_tokens.append(new_tok)
 
     return clean_tokens
@@ -187,7 +188,7 @@ def build_model():
 
 
     # initialize 
-    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=1) # cv=3, scoring='f1_weighted'
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=3) # cv=3, scoring='f1_weighted'
 
     model = cv 
     
