@@ -4,9 +4,26 @@
 During disasters emergency authorities are overloaded by messages, so we have to be able to classify messages into different categories. This automatic preread allow us to better understand situation and organise help in more effective way.
 
 The project was split to:
-1. ETL pipeline processing. Two .csv files were read, cleaned,wrangled, merged and uploaded to SQLLite database
-2. ML pipeline read data from database and analysed them via NLTK, scikit-learn pipeline with multioutput clasification and GridSearchCV.
-3. New message can be clasified via trained model in a Flask web
+1. ETL pipeline processing via process_data.py. Two .csv files disaster_categories.csv,disaster_messages.csv  were read, cleaned,wrangled, merged and uploaded to SQLLite database DisasterResponse.db
+2. ML pipeline via launched train_classifier.py reads data from DisasterResponse.db database and analysed them via NLTK, scikit-learn pipeline with multioutput clasification and GridSearchCV. The output is stored in Pickle classifier.pkl.
+3. New message is clasified via trained model in a Flask web after launching  run.py . Model is uploaded from classifier.pkl and business logic is at run.py. For figures are used data from DisasterResponse.db.
+
+
+•	app
+| - template
+| |- master.html # main page of web app
+| |- go.html # classification result page of web app
+|- run.py # Flask file that runs app
+•	data
+|- disaster_categories.csv # data to process
+|- disaster_messages.csv # data to process
+|- process_data.py
+|- DisasterResponse.db # database to save clean data to
+•	models
+|- train_classifier.py
+|- classifier.pkl # saved model
+•	README.md
+
 
 
 ### Instructions:
